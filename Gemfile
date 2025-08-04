@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.6"
+ruby "3.4.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
@@ -40,6 +40,18 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+gem 'rake', '~> 13.0'
+
+gem 'mysql2'
+
+gem 'dotenv-rails'
+
+gem "devise"
+
+gem 'bootstrap', '~> 5.3.0'
+
+gem 'bundler', '~> 2.6'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
