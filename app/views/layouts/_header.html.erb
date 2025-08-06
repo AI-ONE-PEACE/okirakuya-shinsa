@@ -1,0 +1,13 @@
+<header>
+  <nav class="navbar">
+    <div class="container">
+      <h1><%= link_to "合気道アプリ", root_path %></h1>
+      <ul>
+        <li><%= link_to "ホーム", root_path %></li>
+        <li><%= link_to "技一覧", "#" %></li>  <%# wazas_path に後で置換 %>
+        <li><%= link_to "会員一覧", "#" %></li> <%# members_path に後で置換 %>
+        <li><%= link_to "ログイン", "#" %></li> <%# new_user_session_path（Devise導入後）%>
+      </ul>
+    </div>
+  </nav>
+</header>
