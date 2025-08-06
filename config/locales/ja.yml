@@ -1,0 +1,12 @@
+ja:
+  hello: "こんにちは"
+  devise:
+    sessions:
+      new:
+        sign_in: "ログイン"
+    failure:
+      invalid: "メールアドレスまたはパスワードが正しくありません"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+    passwords:
+      send_instructions: "パスワード再設定用のメールを送信しました。"

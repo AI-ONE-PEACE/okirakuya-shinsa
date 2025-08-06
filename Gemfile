@@ -49,6 +49,8 @@ gem 'dotenv-rails'
 
 gem "devise"
 
+gem 'devise-i18n'
+
 gem 'bootstrap', '~> 5.3.0'
 
 gem 'bundler', '~> 2.6'
