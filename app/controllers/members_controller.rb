@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @members = Member.order(created_at: :desc)
+    @members = Member.includes(:rank).order(created_at: :desc)
   end
 
   def new

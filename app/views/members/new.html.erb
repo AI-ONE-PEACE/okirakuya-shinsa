@@ -1,22 +1,6 @@
-<!-- app/views/members/new.html.erb -->
 <h1>会員登録</h1>
 <%= form_with model: @member, local: true do |f| %>
   <%= f.text_field :name, placeholder: "氏名" %><br>
-  <%= f.text_field :phone_number, placeholder: "電話番号" %><br>
-  <%= f.text_field :gender, placeholder: "性別" %><br>
-  <%= f.date_field :birthday %><br>
-  <%= f.text_area :address, placeholder: "住所" %><br>
-  <%= f.date_field :enroll_on %><br>
-  <%= f.date_field :next_exam_on %><br>
-  <label><%= f.check_box :privacy_policy_agreed %> 同意する</label><br>
-  <%= f.number_field :rank_id %><br>
   <%= f.submit "登録" %>
+  <%= f.collection_select :rank_id, Rank.order(:display_order, :id), :id, :name, include_blank: "段位を選択" %>
 <% end %>
-
-<!-- app/views/members/index.html.erb -->
-<h1>会員一覧</h1>
-<ul>
-  <% @members.each do |m| %>
-    <li><%= [m.name, m.rank_id, m.next_exam_on].compact.join(" / ") %></li>
-  <% end %>
-</ul>
