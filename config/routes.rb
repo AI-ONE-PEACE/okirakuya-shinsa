@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
-  root "home#index"
-
   devise_for :users
 
-  resources :members, only: [:index, :new, :create]
-
-  authenticate :user, ->(u) { u.admin? } do
-    namespace :admin do
-      root "dashboard#index"
-    end
+  # 管理画面
+  namespace :admin do
+    resources :members
+    root "dashboard#index"
   end
+
+  root "home#index"
 end
