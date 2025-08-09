@@ -2,5 +2,5 @@
 <%= form_with model: @member, local: true do |f| %>
   <%= f.text_field :name, placeholder: "氏名" %><br>
   <%= f.submit "登録" %>
-  <%= f.collection_select :rank_id, Rank.order(:display_order, :id), :id, :name, include_blank: "段位を選択" %>
+  <%= f.collection_select :rank_id, Rank.order(:display_order), :id, :name, include_blank: "段位を選択" %><br>
 <% end %>
