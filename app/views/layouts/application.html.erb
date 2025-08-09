@@ -20,7 +20,7 @@
     <p>ようこそ、<%= current_user.email %>さん！</p>
       | <%= link_to "会員一覧", members_path %>
       <% if current_user.admin? %>
-        | <%= link_to "会員登録", new_member_path %>
+        | <%= link_to "管理", admin_root_path %>
       <% end %>
         <%= button_to "ログアウト", destroy_user_session_path, method: :delete,
         form: { "data-turbo-confirm": "ログアウトしますか？" },
