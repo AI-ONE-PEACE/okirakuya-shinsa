@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   resources :members, only: [:index, :new, :create]
 
-  namespace :admin do
-    root "dashboard#index"
+  authenticate :user, ->(u) { u.admin? } do
+    namespace :admin do
+      root "dashboard#index"
+    end
   end
 end
