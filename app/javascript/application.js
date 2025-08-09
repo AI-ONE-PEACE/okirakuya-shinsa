@@ -1,4 +1,3 @@
-import Rails from "@rails/ujs"
-Rails.start()
-
+// app/javascript/application.js
 import "@hotwired/turbo-rails"
+import "controllers"

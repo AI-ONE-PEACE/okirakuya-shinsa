@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
   <title>お氣楽やアプリ</title>
   <%= csrf_meta_tags %>
@@ -14,9 +15,13 @@
   <p class="alert"><%= alert %></p>
 
   <% if user_signed_in? %>
-    <%= link_to "ログアウト", destroy_user_session_path, method: :delete, data: { confirm: "ログアウトしますか？" }, class: "btn btn-outline-secondary" %>
+    <%= button_to "ログアウト",
+        destroy_user_session_path,
+        method: :delete,
+        form: { "data-turbo-confirm": "ログアウトしますか？" },
+        class: "btn btn-outline-secondary" %>
   <% else %>
-    <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-primary" %>
+   <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-primary" %>
   <% end %>
 
   <%= yield %>
