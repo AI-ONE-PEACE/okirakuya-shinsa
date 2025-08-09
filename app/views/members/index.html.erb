@@ -1,0 +1,15 @@
+<!-- app/views/members/index.html.erb -->
+<h1>会員一覧</h1>
+<table>
+  <thead><tr><th>氏名</th><th>段位</th><th>次回審査</th></tr></thead>
+  <tbody>
+    <% @members.each do |m| %>
+      <tr>
+        <td><%= m.name %></td>
+        <td><%= m.rank&.name || "-" %></td>
+        <td><%= m.next_exam_on || "-" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><%= link_to "会員を追加", new_member_path %></p>
