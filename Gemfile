@@ -26,6 +26,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem "jsbundling-rails"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -43,7 +45,9 @@ gem "bootsnap", require: false
 
 gem 'rake', '~> 13.0'
 
-gem 'mysql2'
+# gem 'mysql2'
+
+gem 'pg', '~> 1.5'
 
 gem 'dotenv-rails'
 

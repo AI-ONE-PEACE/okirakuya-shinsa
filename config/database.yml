@@ -1,28 +1,16 @@
-# config/database.yml
-
 default: &default
-  adapter: mysql2
-  encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
 
 development:
   <<: *default
-  username: root
-  password: password
-  host: 127.0.0.1
-  database: okirakuya-shinsa
+  database: okirakuya_development
 
-# test環境はdevelopment環境と分離します
 test:
   <<: *default
-  username: root
-  password: password
-  host: 127.0.0.1
-  database: okirakuya-shinsa_test
+  database: okirakuya_test
 
 production:
   <<: *default
-  username: <%= ENV["DB_USERNAME"] %>
-  password: <%= ENV["DB_PASSWORD"] %>
-  host: <%= ENV["DB_HOST"] %>
-  database: <%= ENV["DB_NAME"] %>
+  url: <%= ENV["DATABASE_URL"] %>
