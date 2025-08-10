@@ -1,7 +1,7 @@
 <h2 class="text-center mt-5">ログイン</h2>
 
 <div class="container mt-4" style="max-width: 400px;">
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form", data: { turbo: false }}) do |f| %>
     <div class="mb-3">
       <%= f.label :email, class: "form-label" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>

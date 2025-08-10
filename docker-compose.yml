@@ -1,20 +1,30 @@
 services:
-  db:
+  pg:
     image: postgres:16
-    container_name: pg
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: your_secret
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: okirakuya_development
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    healthcheck:
+      # ← $${...} はコンテナ内の環境変数を展開、${...} はcomposeの置換（ここでは使わない）
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build: .
+    depends_on:
+      pg:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: development
+      DB_HOST: pg
+      DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: okirakuya_development
     ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-
-volumes:
-  pgdata:
+      - "3000:3000"
