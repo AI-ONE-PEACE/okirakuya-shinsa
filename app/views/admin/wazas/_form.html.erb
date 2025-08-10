@@ -1,0 +1,52 @@
+<%= form_with model: [:admin, @waza] do |f| %>
+  <div class="mb-3">
+    <%= f.label :rank_id, "段位", class: "form-label" %>
+    <%= f.collection_select :rank_id, Rank.order(:display_order), :id, :name, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :order_in_rank, "段位内の並び順", class: "form-label" %>
+    <%= f.number_field :order_in_rank, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :shinsa_set, "種別", class: "form-label" %>
+    <%= f.select :shinsa_set, Waza.shinsa_sets.keys.map { |k| [k, k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :koumoku, "審査項目", class: "form-label" %>
+    <%= f.text_field :koumoku, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :content, "技の説明", class: "form-label" %>
+    <%= f.text_area :content, rows: 5, class: "form-control" %>
+  </div>
+
+  <hr class="my-4">
+
+  <h3 class="h6 mb-3">動画（1件）</h3>
+  <%= f.fields_for :video, (@waza.video || @waza.build_video) do |vf| %>
+    <div class="mb-3">
+      <%= vf.label :title, "タイトル", class: "form-label" %>
+      <%= vf.text_field :title, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= vf.label :url, "URL", class: "form-label" %>
+      <%= vf.text_field :url, placeholder: "https://...", class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= vf.label :platform, "プラットフォーム", class: "form-label" %>
+      <%= vf.text_field :platform, placeholder: "YouTube など", class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= vf.label :description, "動画説明", class: "form-label" %>
+      <%= vf.text_area :description, rows: 3, class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="d-grid">
+    <%= f.submit (action_name == "new" ? "Create Waza" : "Update Waza"), class: "btn btn-primary" %>
+  </div>
+<% end %>
