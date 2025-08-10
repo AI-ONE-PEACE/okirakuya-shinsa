@@ -1,0 +1,10 @@
+.admin-form-wrap{max-width:720px;margin:32px auto;padding:24px;background:#fff;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.form-row{margin-bottom:14px}
+.form-row label{display:block;font-weight:600;margin-bottom:6px}
+.form-row input[type="text"],.form-row input[type="number"],.form-row select,.form-row textarea{width:100%;padding:8px 10px;border:1px solid #d0d7de;border-radius:8px;box-sizing:border-box}
+.form-actions{margin-top:18px}
+.form-actions input[type="submit"]{padding:10px 16px;border:0;border-radius:10px;background:#2563eb;color:#fff;cursor:pointer}
+nav.navbar {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+}

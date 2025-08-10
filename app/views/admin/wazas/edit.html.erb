@@ -1,0 +1,5 @@
+<div class="admin-form-wrap">
+  <h1>技 <%= action_name == "new" ? "新規作成" : "編集" %></h1>
+  <%= render "form" %>
+  <div style="margin-top:8px"><%= link_to "一覧へ戻る", admin_wazas_path %></div>
+</div>

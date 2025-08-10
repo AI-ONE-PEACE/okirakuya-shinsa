@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  waza: one
+  title: MyString
+  url: MyString
+  platform: MyString
+  description: MyText
+
+two:
+  waza: two
+  title: MyString
+  url: MyString
+  platform: MyString
+  description: MyText
