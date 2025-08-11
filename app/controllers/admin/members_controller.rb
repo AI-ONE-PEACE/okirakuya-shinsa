@@ -21,7 +21,11 @@ class Admin::MembersController < ApplicationController
     end
   end
 
-  def show; end
+  def show;
+    @member = Member.find(params[:id])
+    @wazas  = @member.rank ? @member.rank.wazas.order(:order_in_rank) : Waza.none
+  end
+
   def edit; end
 
   def update

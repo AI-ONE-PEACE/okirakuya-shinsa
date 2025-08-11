@@ -1,6 +1,11 @@
-
-<% @member.wazas.each do |waza| %>
-  <p>
-    <%= waza.koumoku %>（<%= I18n.t("enums.waza.shinsa_set.#{waza.shinsa_set}") %>）
-  </p>
+<% if @member.rank.present? %>
+  <h2 class="h5 mb-2"><%= @member.rank.name %> の審査項目</h2>
+  <% (@wazas || @member.rank.wazas).each do |waza| %>
+    <p>
+      <%= waza.koumoku %>
+      （<%= I18n.t("enums.waza.shinsa_set.#{waza.shinsa_set}") %>）
+    </p>
+  <% end %>
+<% else %>
+  <p class="text-body-secondary">段位が未設定です。</p>
 <% end %>
