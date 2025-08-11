@@ -1,0 +1,8 @@
+<h1><%= @waza.koumoku %></h1>
+<p><strong>段位:</strong> <%= @waza.rank.name %></p>
+<p><strong>種別:</strong> <%= I18n.t("enums.waza.shinsa_set.#{@waza.shinsa_set}") %></p>
+<p><%= simple_format(@waza.content) %></p>
+<% if @waza.video&.url.present? %>
+  <p><a href="<%= @waza.video.url %>" target="_blank" rel="noopener">動画を見る</a></p>
+<% end %>
+<%= link_to "一覧へ", wazas_path %>

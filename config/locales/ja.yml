@@ -10,3 +10,22 @@ ja:
       signed_up: "アカウント登録が完了しました。"
     passwords:
       send_instructions: "パスワード再設定用のメールを送信しました。"
+  activerecord:
+    models:
+      waza: 技
+    attributes:
+      waza:
+        shinsa_set: 種別
+        koumoku: 審査項目
+        order_in_rank: 並び順
+  enums:
+    waza:
+      shinsa_set:
+        hitori: 独り技
+        kumi: 組み技
+        taigi: 体技
+    member:
+      role:
+        general: 一般
+        instructor: 指導員
+        admin: 管理者

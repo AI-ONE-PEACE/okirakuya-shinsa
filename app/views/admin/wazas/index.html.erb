@@ -1,28 +1,40 @@
-<!-- app/views/admin/wazas/index.html.erb --><h1>技一覧（管理）</h1>
-<p><%= link_to "新規作成", new_admin_waza_path %></p>
-<table border="1" cellspacing="0" cellpadding="6">
-  <thead>
-    <tr>
-      <th>段位</th><th>順</th><th>種別</th><th>審査項目</th><th>動画</th><th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @wazas.each do |w| %>
-      <tr>
-        <td><%= w.rank.name %></td>
-        <td><%= w.order_in_rank %></td>
-        <td><%= w.shinsa_set %></td> <!-- ja.yml を入れれば _i18n も可 -->
-        <td><%= w.koumoku %></td>
-        <td>
-          <% if w.video&.url.present? %>
-            <a href="<%= w.video.url %>" target="_blank" rel="noopener">リンク</a>
+<!-- app/views/wazas/index.html.erb -->
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 m-0">技一覧</h1>
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to "管理: 技", admin_wazas_path, class: "btn btn-sm btn-outline-secondary" %>
+  <% end %>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <% @wazas.each do |waza| %>
+    <div class="col">
+      <div class="card h-100 shadow-sm hoverable">
+        <% if waza.respond_to?(:thumbnail_url) && waza.thumbnail_url.present? %>
+          <img src="<%= waza.thumbnail_url %>" class="card-img-top" alt="<%= waza.name %> のサムネイル">
+        <% end %>
+        <div class="card-body">
+          <h2 class="h5 card-title mb-2">
+            <%= link_to waza.name, waza_path(waza), class: "stretched-link text-decoration-none" %>
+          </h2>
+
+          <div class="d-flex gap-2 mb-2">
+            <% if waza.respond_to?(:rank) && waza.rank.present? %>
+              <span class="badge text-bg-primary"><%= waza.rank %></span>
+            <% end %>
+            <% if waza.respond_to?(:category) && waza.category.present? %>
+              <span class="badge text-bg-secondary"><%= waza.category %></span>
+            <% end %>
+          </div>
+
+          <% if waza.respond_to?(:description) %>
+            <p class="card-text text-body-secondary truncate-2"><%= waza.description %></p>
           <% end %>
-        </td>
-        <td>
-          <%= link_to "編集", edit_admin_waza_path(w) %> |
-          <%= link_to "削除", admin_waza_path(w), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%# kaminari 等を使っている場合 %>
+<%# <div class="mt-4 d-flex justify-content-center"><%= paginate @wazas %></div> %>

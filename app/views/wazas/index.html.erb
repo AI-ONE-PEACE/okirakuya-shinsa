@@ -1,0 +1,15 @@
+<h1>技一覧</h1>
+<table class="table">
+  <thead><tr><th>段位</th><th>順</th><th>種別</th><th>審査項目</th><th>動画</th></tr></thead>
+  <tbody>
+    <% @wazas.each do |w| %>
+      <tr>
+        <td><%= w.rank.name %></td>
+        <td><%= w.order_in_rank %></td>
+        <td><%= I18n.t("enums.waza.shinsa_set.#{w.shinsa_set}") %></td>
+        <td><%= link_to w.koumoku, waza_path(w) %></td>
+        <td><%= link_to("リンク", w.video.url, target: "_blank", rel: "noopener") if w.video&.url.present? %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

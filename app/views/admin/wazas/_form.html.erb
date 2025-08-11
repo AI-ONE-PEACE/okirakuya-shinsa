@@ -10,8 +10,10 @@
   </div>
 
   <div class="mb-3">
-    <%= f.label :shinsa_set, "種別", class: "form-label" %>
-    <%= f.select :shinsa_set, Waza.shinsa_sets.keys.map { |k| [k, k] }, {}, class: "form-select" %>
+    <%= f.select :shinsa_set,
+      Waza.shinsa_sets.keys.map { |k| [I18n.t("enums.waza.shinsa_set.#{k}"), k] },
+      {},
+      class: "form-select" %>
   </div>
 
   <div class="mb-3">

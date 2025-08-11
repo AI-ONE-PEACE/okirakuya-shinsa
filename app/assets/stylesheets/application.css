@@ -22,6 +22,11 @@ footer {
   font-size: 0.9em;
 }
 
+.form-container {
+  max-width: 800px;   /* フォームの横幅制限 */
+  margin: 0 auto;     /* 中央寄せ */
+  padding: 20px;
+}
 /*
  *= require_tree .
  *= require_self
