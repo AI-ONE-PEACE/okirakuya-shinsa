@@ -9,7 +9,7 @@
         <td><%= link_to m.name, admin_member_path(m) %></td>
         <td><%= m.email %></td>
         <td><%= m.rank&.name || "-" %></td>
-        <td><%= m.role %></td>
+        <td><%= t("enums.member.role.#{m.role}") %></td>
         <td><%= link_to "編集", edit_admin_member_path(m) %></td>
       </tr>
     <% end %>

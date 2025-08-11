@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_10_142229) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,8 +40,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_10_142229) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position", default: 0, null: false
     t.index ["display_order"], name: "index_ranks_on_display_order"
     t.index ["name"], name: "index_ranks_on_name", unique: true
+    t.index ["position"], name: "index_ranks_on_position"
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,6 +67,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_10_142229) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rank_id", null: false
+    t.index ["rank_id"], name: "index_videos_on_rank_id"
     t.index ["waza_id"], name: "index_videos_on_waza_id", unique: true
   end
 
@@ -81,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_10_142229) do
   end
 
   add_foreign_key "members", "ranks"
+  add_foreign_key "videos", "ranks"
   add_foreign_key "videos", "wazas"
   add_foreign_key "wazas", "ranks"
 end

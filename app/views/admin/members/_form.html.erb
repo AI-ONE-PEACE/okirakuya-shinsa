@@ -39,7 +39,14 @@
   <div class="row mt-2">
     <div class="col-md-6">
       <%= f.label :role, "ステータス" %>
-      <%= f.select :role, Member.roles.keys.map{ |k| [k, k] }, {}, class: "form-control" %>
+      <%= f.select :role,
+       options_for_select(
+          Member.roles.keys.map { |k| [t("enums.member.role.#{k}"), k] },
+          f.object.role
+        ),
+        {},
+        class: "form-select"
+      %>
     </div>
   <div class="col-md-6">
     <%= f.label :rank_id, "段位/級" %>
@@ -53,7 +60,7 @@
        else
          []
        end %>
-    <%= f.collection_select :rank_id, ranks, :id, :name, { include_blank: "未設定" }, class: "form-control" %>
+    <%= f.collection_select :rank_id, ranks, :id, :name, {}, class: "form-control" %>
   </div>
 
   <div class="mt-2">

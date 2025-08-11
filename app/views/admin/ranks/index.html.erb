@@ -1,0 +1,17 @@
+<h1 class="h3 text-center mb-3">段位マスタ</h1>
+
+<% if @ranks.any? %>
+  <table class="table table-sm table-striped">
+    <thead><tr><th>並び順</th><th>名称</th></tr></thead>
+    <tbody>
+      <% @ranks.each do |r| %>
+        <tr>
+          <td><%= r.position %></td>
+          <td><%= r.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text-center text-body-secondary">データがありません</p>
+<% end %>

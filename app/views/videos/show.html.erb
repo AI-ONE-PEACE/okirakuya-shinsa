@@ -1,0 +1,18 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h3 text-center mb-3"><%= @video.title %></h1>
+
+    <%# YouTube なら埋め込み、ファイルURLなら video_tag %>
+    <div class="ratio ratio-16x9 mb-3">
+      <%= render "shared/embed", url: @video.url %>
+    </div>
+
+    <% if @video.respond_to?(:description) && @video.description.present? %>
+      <div class="lead"><%= simple_format @video.description %></div>
+    <% end %>
+  </div>
+
+  <div class="card-footer text-center">
+    <%= link_to "← 動画一覧へ", videos_path, class: "btn btn-link" %>
+  </div>
+</div>

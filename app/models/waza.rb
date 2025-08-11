@@ -1,5 +1,5 @@
 class Waza < ApplicationRecord
-  belongs_to :rank
+  belongs_to :rank, optional: true
   has_one :video, dependent: :destroy   # 1対1
   accepts_nested_attributes_for :video, allow_destroy: true
 

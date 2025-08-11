@@ -1,19 +1,34 @@
-<header class="bg-light border-bottom mb-3">
-  <div class="container d-flex justify-content-between align-items-center py-2">
-    <h1 class="h4 mb-0">
-      <%= link_to "お氣楽や審査アプリ", root_path, class: "text-decoration-none text-dark" %>
-    </h1>
-    <nav>
-      <%= link_to "ホーム", root_path, class: "me-2" %>
-      <%= link_to "技一覧", wazas_path, class: "me-2" %>
-      <%= link_to "会員一覧", admin_members_path, class: "me-2" if user_signed_in? && current_user.admin? %>
-      <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path,
-              data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
-              class: "btn btn-outline-secondary btn-sm" %>
-      <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-primary btn-sm" %>
-      <% end %>
-    </nav>
+
+<nav class="navbar navbar-expand-md bg-white border-bottom">
+  <div class="container">
+      <a class="navbar-brand mx-auto d-flex align-items-center gap-2" href="/">
+        <%= image_tag "okiraku_logo.png",
+          alt: "お氣楽や ロゴ",
+          class: "brand-logo" %>
+        <span class="fw-semibold d-none d-sm-inline">審査サポートアプリ</span>
+      </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#globalNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="globalNav" class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav gap-3 align-items-md-center">
+        <li class="nav-item"><%= link_to "ホーム", root_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "技一覧", wazas_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "動画一覧", videos_path, class: "nav-link" %></li>
+
+        <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <li class="nav-item"><%= link_to "管理: 会員", admin_members_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "管理: 技", admin_wazas_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "管理: 段位", admin_ranks_path, class: "nav-link" %></li>
+          <% end %>
+          <li class="nav-item"><span class="badge text-bg-light">ようこそ <%= current_user.email %>さん </span></li>
+          <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-secondary" %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "btn btn-sm btn-outline-primary" %></li>
+        <% end %>
+      </ul>
+    </div>
   </div>
-</header>
+</nav>

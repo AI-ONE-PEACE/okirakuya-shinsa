@@ -1,0 +1,6 @@
+<% embed = (defined?(youtube_embed_url) ? youtube_embed_url(url) : nil) %>
+<% if embed.present? %>
+  <iframe src="<%= embed %>" title="YouTube video" allowfullscreen></iframe>
+<% else %>
+  <%= video_tag url, controls: true, class: "w-100 h-100" %>
+<% end %>

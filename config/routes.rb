@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
 
-    resources :wazas, only: [:index, :show]# 一般画面
+    resources :wazas, only: [:index, :show]
+    resources :videos, only: %i[index show]
+    resources :ranks,  only: %i[index show]
 
-  # 管理画面
   namespace :admin do
     resources :members
     resources :ranks, only: [:index]
