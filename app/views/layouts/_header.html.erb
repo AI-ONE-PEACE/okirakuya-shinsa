@@ -1,13 +1,19 @@
-<header>
-  <nav class="navbar">
-    <div class="container">
-      <h1><%= link_to "合気道アプリ", root_path %></h1>
-      <ul>
-        <li><%= link_to "ホーム", root_path %></li>
-        <li><%= link_to "技一覧", "#" %></li>  <%# wazas_path に後で置換 %>
-        <li><%= link_to "会員一覧", "#" %></li> <%# members_path に後で置換 %>
-        <li><%= link_to "ログイン", "#" %></li> <%# new_user_session_path（Devise導入後）%>
-      </ul>
-    </div>
-  </nav>
+<header class="bg-light border-bottom mb-3">
+  <div class="container d-flex justify-content-between align-items-center py-2">
+    <h1 class="h4 mb-0">
+      <%= link_to "お氣楽や審査アプリ", root_path, class: "text-decoration-none text-dark" %>
+    </h1>
+    <nav>
+      <%= link_to "ホーム", root_path, class: "me-2" %>
+      <%= link_to "技一覧", wazas_path, class: "me-2" %>
+      <%= link_to "会員一覧", admin_members_path, class: "me-2" if user_signed_in? && current_user.admin? %>
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path,
+              data: { turbo_method: :delete, turbo_confirm: "ログアウトしますか？" },
+              class: "btn btn-outline-secondary btn-sm" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-primary btn-sm" %>
+      <% end %>
+    </nav>
+  </div>
 </header>

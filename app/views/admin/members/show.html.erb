@@ -1,2 +1,6 @@
-<h1>Admin::Members#show</h1>
-<p>Find me in app/views/admin/members/show.html.erb</p>
+
+<% @member.wazas.each do |waza| %>
+  <p>
+    <%= waza.koumoku %>（<%= I18n.t("enums.waza.shinsa_set.#{waza.shinsa_set}") %>）
+  </p>
+<% end %>
