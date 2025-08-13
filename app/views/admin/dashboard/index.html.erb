@@ -1,5 +1,62 @@
-<!-- app/views/admin/dashboard/index.html.erb -->
-<h1>管理者用 登録画面</h1>
-<p>ログイン成功 🎉</p>
-<%= link_to "会員一覧", admin_members_path, class: "btn btn-primary" %>
-<%= link_to "会員登録", new_admin_member_path, class: "btn btn-success" %>
+<div class="container-xl admin-dashboard">
+  <!-- Hero -->
+  <section class="admin-hero p-4 p-md-5 mb-4 rounded-4 shadow-sm position-relative overflow-hidden">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-7">
+        <h1 class="fw-bold mb-2">管理ダッシュボード</h1>
+        <p class="lead text-body-secondary mb-4">
+          会員・技・段位・動画をここからサクッと管理できます。
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <%= link_to "会員一覧",         admin_members_path,     class: "btn btn-primary" %>
+          <%= link_to "会員登録",         new_admin_member_path,  class: "btn btn-success" %>
+        <!--    <%= link_to "技（編集）",       admin_wazas_path,       class: "btn btn-outline-secondary" %>
+          <%= link_to "段位（メンバー）", admin_ranks_path,       class: "btn btn-outline-secondary" %>-->
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="hero-image rounded-4 shadow-sm overflow-hidden">
+          <%= image_tag "komoto.png",
+                        class: "w-100 h-100 object-fit-cover",
+                        alt: "管理ページイメージ" %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick cards -->
+  <section class="row g-3">
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 mb-2">会員管理</h2>
+          <p class="small text-body-secondary mb-3">会員の登録・変更・検索。</p>
+          <div class="d-flex gap-2">
+            <%= link_to "一覧", admin_members_path, class: "btn btn-sm btn-primary" %>
+            <%= link_to "新規", new_admin_member_path, class: "btn btn-sm btn-success" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 mb-2">技管理</h2>
+          <p class="small text-body-secondary mb-3">技の説明・動画リンクを整理。</p>
+          <%= link_to "技（編集）", admin_wazas_path, class: "btn btn-sm btn-primary" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 mb-2">段位／メンバー</h2>
+          <p class="small text-body-secondary mb-3">段位ごとのメンバー確認。</p>
+          <%= link_to "段位（メンバー）", admin_ranks_path, class: "btn btn-sm btn-success" %>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

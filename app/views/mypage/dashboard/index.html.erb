@@ -1,0 +1,146 @@
+<div class="container-xl mypage">
+  <% if @member.nil? %>
+    <div class="alert alert-warning my-4">
+      会員情報が未登録です。管理者にお問い合わせください。
+    </div>
+  <% else %>
+    <% prog = exam_progress(@last_exam_on, @next_exam_on) %>
+
+<section class="card shadow-sm border-0 rounded-4 mb-4 position-relative overflow-hidden">
+  <%= image_tag "ki.png", alt: "氣",
+        class: "hero-ki d-none d-md-block" %>
+
+  <div class="card-body p-4 p-md-5">
+    <div class="row g-4 align-items-center">
+      <div class="col-md">
+        <h1 class="h4 mb-2"><%= @member.name %> さんのマイページ</h1>
+
+      <p class="mb-1 fs-5">
+        現在の段位：
+        <span class="badge bg-primary-subtle text-primary hero-rank-badge">
+          <%= @current_rank&.name || "未設定" %>
+        </span>
+      </p>
+
+      <p class="text-body-secondary mb-3">
+        前回審査日：<%= @last_exam_on ? l(@last_exam_on) : "—" %>
+        ／ 次回審査日：<%= @next_exam_on ? l(@next_exam_on) : "—" %>
+      </p>
+
+            <div class="mb-3">
+              <% if prog[:days_left].nil? %>
+                <span class="badge bg-secondary-subtle text-secondary">審査日を登録すると、進捗が見えるようになります。</span>
+              <% elsif prog[:days_left] > 0 %>
+                <span class="badge bg-success-subtle text-success">次の審査まであと <strong><%= prog[:days_left] %></strong> 日。今日もコツコツ！</span>
+              <% else %>
+                <span class="badge bg-warning-subtle text-warning">審査日を過ぎています。仕上げて受験しましょう！</span>
+              <% end %>
+            </div>
+
+            <% if prog[:percent] %>
+              <div class="progress" style="height: 10px;">
+                <div class="progress-bar" role="progressbar"
+                     style="width: <%= prog[:percent] %>%;" aria-valuenow="<%= prog[:percent] %>"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="small text-body-secondary mt-1">前回からの経過 <%= prog[:percent] %>%</div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="mb-4 mypage-narrow">
+  <div class="mb-2 text-center">
+    <h2 class="h5 mb-0">現在の段位：<%= @current_rank&.name || "未設定" %></h2>
+  </div>
+
+  <% if @current_wazas.any? %>
+    <div class="row g-3 justify-content-center">
+      <% @current_wazas.each do |w| %>
+        <div class="col-12 col-lg-8 col-xl-7">
+          <div class="card h-100 shadow-sm rounded-4">
+            <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge text-bg-light"><%= shinsa_set_label(w.shinsa_set) %></span>
+                    <span class="text-body-secondary small">#<%= w.order_in_rank %></span>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-7">
+                      <div class="desc-reset"><%= h(w.content) %></div>
+                    </div>
+                    <div class="col-5">
+                      <% v = w.videos.first %>
+                      <% if v&.url.present? %>
+                        <%= link_to v.url, target: "_blank", rel: "noopener", class: "d-block ratio ratio-16x9" do %>
+                          <%= video_thumb_tag(v) %>
+                        <% end %>
+                        <div class="small mt-1 text-truncate"><%= v.title %></div>
+                      <% else %>
+                        <div class="ratio ratio-16x9 bg-light rounded d-flex align-items-center justify-content-center">
+                          <span class="text-body-secondary small">動画なし</span>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-body-secondary">この段位に紐づく技はまだありません。</p>
+      <% end %>
+    </section>
+
+
+<section class="mb-4 mypage-narrow">
+  <div class="mb-2 text-center">
+    <h2 class="h5 mb-0">次回の段位：<%= @next_rank&.name || "未設定" %></h2>
+  </div>
+
+  <% if @next_rank.blank? %>
+    <p class="text-body-secondary">現在が最上位のため、次の段位はありません。</p>
+  <% elsif @next_wazas.any? %>
+    <div class="row g-3 justify-content-center">
+      <% @next_wazas.each do |w| %>
+        <div class="col-12 col-lg-8 col-xl-7">
+          <div class="card h-100 shadow-sm rounded-4">
+            <div class="card-body">
+              <!-- 中身は既存のまま -->
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="badge text-bg-light"><%= shinsa_set_label(w.shinsa_set) %></span>
+                    <span class="text-body-secondary small">#<%= w.order_in_rank %></span>
+                  </div>
+
+                  <div class="row g-3">
+                    <div class="col-7">
+                      <div class="desc-reset"><%= h(w.content) %></div>
+                    </div>
+                    <div class="col-5">
+                      <% v = w.videos.first %>
+                      <% if v&.url.present? %>
+                        <%= link_to v.url, target: "_blank", rel: "noopener", class: "d-block ratio ratio-16x9" do %>
+                          <%= video_thumb_tag(v) %>
+                        <% end %>
+                        <div class="small mt-1 text-truncate"><%= v.title %></div>
+                      <% else %>
+                        <div class="ratio ratio-16x9 bg-light rounded d-flex align-items-center justify-content-center">
+                          <span class="text-body-secondary small">動画なし</span>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-body-secondary">この段位に紐づく技はまだありません。</p>
+      <% end %>
+    </section>
+  <% end %>
+</div>

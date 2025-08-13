@@ -1,0 +1,13 @@
+<h1 class="h4"><%= @waza.name %></h1>
+<p>段位: <%= @waza.rank&.name || "未設定" %></p>
+
+<h2 class="h6 mt-3">動画</h2>
+<% if @waza.videos.any? %>
+  <ul>
+    <% @waza.videos.each do |video| %>
+      <li><%= video.title %>（<%= video.rank&.name || "未設定" %>）</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-body-secondary">動画なし</p>
+<% end %>

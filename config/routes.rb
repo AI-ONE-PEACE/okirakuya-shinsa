@@ -7,9 +7,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :members
-    resources :ranks, only: [:index]
+    resources :ranks
     resources :wazas
     root "dashboard#index"
+  end
+
+  namespace :mypage do
+    root to: "dashboard#index"
   end
 
   root "home#index"

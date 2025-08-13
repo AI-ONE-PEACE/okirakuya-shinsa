@@ -1,5 +1,31 @@
 <h1 class="h3 text-center mb-3">動画一覧</h1>
 
+<div class="row g-2 align-items-end mb-3">
+  <div class="col-md-6">
+   <label class="form-label fw-bold mb-1 d-block text-left">段位、技で絞り込み</label>
+    <%= form_with url: videos_path, method: :get, local: true,
+      data: { turbo: false }, html: { id: "wazaFilters" } do %>
+      <div class="row g-2">
+        <div class="col">
+          <label class="form-label mb-1 d-block text-center">段位</label>
+          <%= select_tag :rank_id,
+                options_for_select([["すべて", ""]] + @ranks.map { |r| [r.name, r.id] }, params[:rank_id]),
+                class: "form-select select-center",
+                onchange: "this.form.submit()" %>
+        </div>
+        <div class="col">
+          <label class="form-label mb-1 d-block text-center">技</label>
+          <%= select_tag :shinsa_set,
+                options_for_select([["すべて", ""]] + @shinsa_keys.map { |k| [t("enums.waza.shinsa_set.#{k}"), k] },
+                                   params[:shinsa_set]),
+                class: "form-select select-center",
+                onchange: "this.form.submit()" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   <% @videos.each do |video| %>
     <% thumb =

@@ -51,8 +51,9 @@ class Admin::MembersController < ApplicationController
   # ★DB列名に合わせる（いまのスキーマ準拠）
   def member_params
     params.require(:member).permit(
-      :name, :kana, :email, :phone_number, :gender, :birthday, :address,
-      :enroll_on, :next_exam_on, :privacy_policy_agreed, :role, :rank_id, :notes
+      :name, :kana, :email, :phone_number, :gender,
+      :birthday, :enroll_on, :last_exam_on, :next_exam_on,
+      :role, :rank_id, :address, :privacy_policy_agreed, :notes
     )
   end
 

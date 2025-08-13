@@ -11,3 +11,67 @@
 }
 .brand-logo { height: 36px; width: auto; display: block; }
 @media (min-width: 768px) { .brand-logo { height: 44px; } }
+
+/* 固定レイアウトで列幅を安定化 */
+/* 幅を安定化 */
+.table-wazas { table-layout: fixed; }
+.table-wazas .col-rank    { width: 12%; }
+.table-wazas .col-set     { width: 16%; }
+.table-wazas .col-desc    { width: 40%; }  /* 説明を広めに */
+.table-wazas .col-videos  { width: 22%; }
+.table-wazas .col-actions { width: 110px; }
+
+.table-wazas td, .table-wazas th { vertical-align: middle; }
+
+/* 2行で省略（WebKit系 line-clamp） */
+.line-clamp-2{
+  display:-webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow:hidden;
+}
+.word-wrap{ word-break: break-word; overflow-wrap: anywhere; }
+
+/* 動画リストの折り返し/省略 */
+.videos-list li{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* モバイル微調整 */
+@media (max-width: 768px){
+  .table-wazas .col-desc   { width: 46%; }
+  .table-wazas .col-videos { width: 28%; }
+  .line-clamp-2 { -webkit-line-clamp: 1; } /* スマホは1行省略に */
+}
+
+/* 公開版 wazas テーブル（4列） */
+.table-wazas-public { table-layout: fixed; }
+.table-wazas-public .col-rank   { width: 14%; }
+.table-wazas-public .col-set    { width: 18%; }
+.table-wazas-public .col-desc   { width: 48%; } /* 説明広め */
+.table-wazas-public .col-videos { width: 20%; }
+
+.line-clamp-2{
+  display:-webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow:hidden;
+}
+.word-wrap{ word-break: break-word; overflow-wrap: anywhere; }
+
+.videos-list li{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+@media (max-width: 768px){
+  .table-wazas-public .col-desc   { width: 50%; }
+  .table-wazas-public .col-videos { width: 22%; }
+  .line-clamp-2 { -webkit-line-clamp: 1; }
+}
+
+.ratio iframe,
+.ratio video { width: 100%; height: 100%; }

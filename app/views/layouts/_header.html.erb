@@ -2,10 +2,10 @@
 <nav class="navbar navbar-expand-md bg-white border-bottom">
   <div class="container">
       <a class="navbar-brand mx-auto d-flex align-items-center gap-2" href="/">
-        <%= image_tag "okiraku_logo.png",
-          alt: "お氣楽や ロゴ",
-          class: "brand-logo" %>
-        <span class="fw-semibold d-none d-sm-inline">審査サポートアプリ</span>
+      <%= link_to "https://kiatu.com/", target: "_blank", rel: "noopener", class: "navbar-brand", aria: { label: "お氣楽や（外部サイト）" } do %>
+      <%= image_tag "okiraku_logo.png", alt: "お氣楽や ロゴ", class: "brand-logo" %>
+<% end %>
+       <span class="fw-semibold d-none d-sm-inline app-title-large">審査サポートアプリ</span>
       </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#globalNav">
       <span class="navbar-toggler-icon"></span>
@@ -14,16 +14,34 @@
     <div id="globalNav" class="collapse navbar-collapse justify-content-center">
       <ul class="navbar-nav gap-3 align-items-md-center">
         <li class="nav-item"><%= link_to "ホーム", root_path, class: "nav-link" %></li>
+      <% if user_signed_in? %>
+        <li class="nav-item"><%= link_to "マイページ", mypage_root_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "技一覧", wazas_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "動画一覧", videos_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "段位一覧", ranks_path, class: "nav-link" %></li>
+          <% if current_user&.admin? %>
+        <li class="nav-item">
+          <%= link_to "ダッシュボード", admin_root_path, class: "nav-link" %>
+        </li>
 
-        <% if user_signed_in? %>
-          <% if current_user.admin? %>
-            <li class="nav-item"><%= link_to "管理: 会員", admin_members_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to "管理: 技", admin_wazas_path, class: "nav-link" %></li>
-            <li class="nav-item"><%= link_to "管理: 段位", admin_ranks_path, class: "nav-link" %></li>
+        <li class="nav-item dropdown" data-turbo="false">
+          <button
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="adminDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            data-turbo="false"
+            aria-expanded="false">
+            管理
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+            <li><%= link_to "会員（編集）", admin_members_path, class: "dropdown-item" %></li>
+            <li><%= link_to "技（編集）",   admin_wazas_path,  class: "dropdown-item" %></li>
+          </ul>
+        </li>
           <% end %>
-          <li class="nav-item"><span class="badge text-bg-light">ようこそ <%= current_user.email %>さん </span></li>
+          <li class="nav-item"><span class="badge text-bg-light">ようこそ <%= current_display_name %> さん</span></li>
           <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-secondary" %></li>
         <% else %>
           <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "btn btn-sm btn-outline-primary" %></li>

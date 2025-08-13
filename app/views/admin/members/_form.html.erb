@@ -22,15 +22,19 @@
   </div>
 
   <div class="row mt-2">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= f.label :birthday, "生年月日" %>
       <%= f.date_field :birthday, class: "form-control" %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <%= f.label :enroll_on, "入会日" %>
       <%= f.date_field :enroll_on, class: "form-control" %>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+      <%= f.label :last_exam_on, "前回審査日" %>
+      <%= f.date_field :last_exam_on, class: "form-control" %>
+    </div>
+    <div class="col-md-3">
       <%= f.label :next_exam_on, "次回審査日" %>
       <%= f.date_field :next_exam_on, class: "form-control" %>
     </div>

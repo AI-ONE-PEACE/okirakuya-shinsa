@@ -4,7 +4,8 @@ class Admin::RanksController < ApplicationController
   before_action :ensure_admin!
 
   def index
-    @ranks = Rank.order(:position)
+    @ranks = Rank.ordered.includes(:members)
+    @unranked_members = Member.where(rank_id: nil).order(:name)
   end
 
   private

@@ -1,0 +1,25 @@
+<% hidden_style = f.object.marked_for_destruction? ? 'display:none' : nil %>
+<div class="card p-2 mb-2" data-nested-form-wrapper style="<%= hidden_style %>">
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :_destroy, value: "0" %>
+
+  <div class="row g-2">
+    <div class="col-md-4"><%= f.text_field :title, class: "form-control", placeholder: "タイトル" %></div>
+    <div class="col-md-5"><%= f.text_field :url,   class: "form-control", placeholder: "URL (YouTube 等)" %></div>
+    <div class="col-md-3">
+      <%= f.collection_select :rank_id, Rank.ordered, :id, :name,
+            { include_blank: "未設定" }, class: "form-select" %>
+    </div>
+  </div>
+
+  <div class="row g-2 mt-2">
+    <div class="col-md-4"><%= f.text_field :platform, class: "form-control", placeholder: "platform (任意)" %></div>
+    <div class="col-md-8"><%= f.text_area  :description, rows: 5, class: "form-control", placeholder: "説明 (任意)" %></div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-2">
+    <button type="button" class="btn btn-sm btn-outline-danger" data-action="nested-form#remove">
+      <%= f.object.persisted? ? "この動画を削除" : "行を消す" %>
+    </button>
+  </div>
+</div>

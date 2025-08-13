@@ -1,0 +1,39 @@
+<tr>
+  <td class="text-center text-nowrap"><%= waza.rank&.name || "未設定" %></td>
+  <td class="text-center"><%= shinsa_set_label(waza.shinsa_set)  %></td>
+
+  <td class="text-start align-top">
+    <div class="desc-reset" title="<%= waza.content.to_s %>"><%= h(waza.content) %></div>
+  </td>
+
+  <td class="align-middle text-start">
+    <% if waza.videos.any? %>
+      <% if waza.videos.size > 1 %>
+        <span class="badge text-bg-secondary me-1"><%= waza.videos.size %></span>
+      <% end %>
+      <ul class="mb-0 list-unstyled ps-0 videos-list d-inline-block text-start">
+        <% waza.videos.first(3).each do |video| %>
+          <li class="text-truncate">
+            <% if video.url.present? %>
+              <%= link_to video.title, video.url, target: "_blank", rel: "noopener" %>
+            <% else %><%= video.title %><% end %>
+            <% if (rank_name = video.rank&.name.presence || waza.rank&.name.presence) %>
+              <span class="badge text-bg-secondary ms-1 d-none d-md-inline"><%= rank_name %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+      <% if waza.videos.size > 3 %>
+        <small class="text-body-secondary d-block">…ほか <%= waza.videos.size - 3 %> 件</small>
+      <% end %>
+    <% else %>
+      <span class="text-body-secondary">動画なし</span>
+    <% end %>
+  </td>
+
+  <% if local_assigns[:show_actions] %>
+    <td class="text-right">
+      <%= link_to "編集", edit_admin_waza_path(waza), class: "btn btn-sm btn-outline-secondary" %>
+    </td>
+  <% end %>
+</tr>

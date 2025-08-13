@@ -341,6 +341,7 @@ DEPENDENCIES
   pg (~> 1.5)
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.1)
+  rails-i18n (~> 7.0)
   rake (~> 13.0)
   sassc-rails
   selenium-webdriver

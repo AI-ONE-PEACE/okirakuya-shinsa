@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_13_111324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,8 +30,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
     t.string "email"
     t.string "kana"
     t.text "notes"
+    t.bigint "user_id"
+    t.date "last_exam_on"
     t.index ["email"], name: "index_members_on_email", unique: true
+    t.index ["last_exam_on"], name: "index_members_on_last_exam_on"
     t.index ["rank_id"], name: "index_members_on_rank_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "ranks", force: :cascade do |t|
@@ -55,6 +59,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0, null: false
+    t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -67,7 +72,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "rank_id", null: false
+    t.bigint "rank_id"
     t.index ["rank_id"], name: "index_videos_on_rank_id"
     t.index ["waza_id"], name: "index_videos_on_waza_id", unique: true
   end
@@ -85,6 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_11_164258) do
   end
 
   add_foreign_key "members", "ranks"
+  add_foreign_key "members", "users"
   add_foreign_key "videos", "ranks"
   add_foreign_key "videos", "wazas"
   add_foreign_key "wazas", "ranks"

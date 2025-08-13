@@ -24,6 +24,9 @@ ja:
         hitori: 独り技
         kumi: 組み技
         taigi: 体技
+        taiso: 体操
+        sonota: その他
+
     member:
       role:
         general: 一般

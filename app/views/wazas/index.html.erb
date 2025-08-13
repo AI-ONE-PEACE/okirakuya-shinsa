@@ -1,15 +1,55 @@
-<h1>技一覧</h1>
-<table class="table">
-  <thead><tr><th>段位</th><th>順</th><th>種別</th><th>審査項目</th><th>動画</th></tr></thead>
-  <tbody>
-    <% @wazas.each do |w| %>
-      <tr>
-        <td><%= w.rank.name %></td>
-        <td><%= w.order_in_rank %></td>
-        <td><%= I18n.t("enums.waza.shinsa_set.#{w.shinsa_set}") %></td>
-        <td><%= link_to w.koumoku, waza_path(w) %></td>
-        <td><%= link_to("リンク", w.video.url, target: "_blank", rel: "noopener") if w.video&.url.present? %></td>
-      </tr>
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h2 class="h5 mb-0">技一覧</h2>
+</div>
+
+<div class="mb-3">
+  <div class="form-label fw-bold mb-1 text-start">段位、技で絞り込み</div>
+
+  <%= form_with url: wazas_path, method: :get, local: true,
+        data: { turbo: false },
+        html: { id: "wazaFilters", class: "row g-2 align-items-end" } do %>
+
+      <div class="col-auto">
+        <label for="filter_rank_id" class="form-label fw-bold mb-1 d-block text-center">段位</label>
+        <%= select_tag :rank_id,
+              options_for_select([["すべて",""]] + @ranks.map { |r| [r.name, r.id] }, params[:rank_id]),
+              id: "filter_rank_id",
+              class: "form-select select-center",
+              onchange: "this.form.submit()" %>
+      </div>
+
+      <div class="col-auto">
+        <label for="filter_shinsa_set" class="form-label fw-bold mb-1 d-block text-center">技</label>
+        <%= select_tag :shinsa_set,
+              options_for_select([["すべて",""]] + @shinsa_keys.map { |k| [t("enums.waza.shinsa_set.#{k}"), k] }, params[:shinsa_set]),
+              id: "filter_shinsa_set",
+              class: "form-select select-center",
+              onchange: "this.form.submit()" %>
+      </div>
     <% end %>
+  </div>
+
+  <table class="table table-sm align-middle table-wazas-public w-100">
+    <colgroup>
+      <col class="col-rank">
+      <col class="col-set">
+      <col class="col-desc">
+      <col class="col-videos">
+    </colgroup>
+
+  <thead>
+    <tr>
+      <th class="text-center">段位</th>
+      <th class="text-center">技</th>
+      <th class="text-start">技の説明</th>
+      <th class="text-center">動画</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%= render partial: "wazas/row",
+             collection: @wazas,
+             as: :waza,
+             locals: { public: true, show_actions: false } %>
   </tbody>
 </table>

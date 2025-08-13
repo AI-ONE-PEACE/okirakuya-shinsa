@@ -1,6 +1,44 @@
-<% embed = (defined?(youtube_embed_url) ? youtube_embed_url(url) : nil) %>
-<% if embed.present? %>
-  <iframe src="<%= embed %>" title="YouTube video" allowfullscreen></iframe>
+<% raw_url = (local_assigns[:url] || "").to_s.strip %>
+
+<%# YouTube ---------------------------------------------------- %>
+<% if raw_url =~ /(youtube\.com\/watch\?v=|youtu\.be\/)/ %>
+  <% vid = (raw_url[/[?&]v=([^&]+)/, 1] || raw_url.split("/").last).to_s %>
+  <iframe
+    src="https://www.youtube.com/embed/<%= ERB::Util.url_encode(vid) %>?rel=0"
+    title="YouTube video"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    style="width:100%; height:100%; border:0;"></iframe>
+
+<%# Vimeo ------------------------------------------------------- %>
+<% elsif raw_url =~ /vimeo\.com\/(\d+)/ %>
+  <% vid = raw_url[/vimeo\.com\/(\d+)/, 1] %>
+  <iframe
+    src="https://player.vimeo.com/video/<%= vid %>"
+    title="Vimeo video"
+    allow="autoplay; fullscreen; picture-in-picture"
+    allowfullscreen
+    style="width:100%; height:100%; border:0;"></iframe>
+
+<%# Google Drive（共有リンク→previewに変換） ------------------- %>
+<% elsif raw_url =~ /drive\.google\.com/ %>
+  <% file_id = raw_url[/\/d\/([^\/]+)/, 1] || raw_url[/[?&]id=([^&]+)/, 1] %>
+  <% preview = file_id.present? ? "https://drive.google.com/file/d/#{file_id}/preview" : raw_url %>
+  <iframe
+    src="<%= preview %>"
+    title="Google Drive video"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+    style="width:100%; height:100%; border:0;"></iframe>
+
+<%# Dropbox（共有リンク→生ファイルURLに変換） ------------------ %>
+<% elsif raw_url =~ /dropbox\.com/ %>
+  <% playable = raw_url.sub(/\?dl=\d/, '').sub(/\?raw=\d/, '') + '?raw=1' %>
+  <video src="<%= playable %>" controls playsinline preload="metadata"
+         style="width:100%; height:100%;"></video>
+
+<%# それ以外（MP4/HLS等）---------------------------------------- %>
 <% else %>
-  <%= video_tag url, controls: true, class: "w-100 h-100" %>
+  <video src="<%= raw_url %>" controls playsinline preload="metadata"
+         style="width:100%; height:100%;"></video>
 <% end %>

@@ -1,28 +1,57 @@
-<h1>技一覧（管理）</h1>
-<p><%= link_to "新規作成", new_admin_waza_path %></p>
-<table border="1" cellspacing="0" cellpadding="6">
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h1 class="h5 mb-0">技一覧</h1>
+  <%= link_to "新規登録", new_admin_waza_path, class: "btn btn-primary btn-sm" %>
+</div>
+
+<div class="mb-3">
+  <div class="form-label fw-bold mb-1 text-start">段位、技で絞り込み</div>
+
+  <%= form_with url: admin_wazas_path, method: :get, local: true,
+        data: { turbo: false },
+        html: { id: "wazaFilters", class: "row g-2 align-items-end" } do %>
+
+    <div class="col-auto">
+      <label for="filter_rank_id" class="form-label fw-bold mb-1 d-block text-center">段位</label>
+      <%= select_tag :rank_id,
+            options_for_select([["すべて",""]] + @ranks.map { |r| [r.name, r.id] }, params[:rank_id]),
+            id: "filter_rank_id", class: "form-select select-center",
+            onchange: "this.form.requestSubmit()" %>
+    </div>
+
+    <div class="col-auto">
+      <label for="filter_shinsa_set" class="form-label fw-bold mb-1 d-block text-center">技</label>
+      <%= select_tag :shinsa_set,
+            options_for_select([["すべて",""]] + @shinsa_keys.map { |k| [t('enums.waza.shinsa_set.'+k), k] }, params[:shinsa_set]),
+            id: "filter_shinsa_set", class: "form-select select-center",
+            onchange: "this.form.requestSubmit()" %>
+    </div>
+
+  <% end %>
+</div>
+
+<table class="table table-sm align-middle table-wazas w-100">
+  <colgroup>
+    <col class="col-rank">
+    <col class="col-set">
+    <col class="col-desc">
+    <col class="col-videos">
+    <col class="col-actions">
+  </colgroup>
+
   <thead>
     <tr>
-      <th>段位</th><th>順</th><th>種別</th><th>審査項目</th><th>動画</th><th></th>
+      <th class="text-center">段位</th>
+      <th class="text-center">種類</th>
+      <th class="text-start">技の説明</th>
+      <th class="text-start">動画</th>
+      <th class="text-start">操作</th>
     </tr>
   </thead>
+
   <tbody>
-    <% @wazas.each do |w| %>
-      <tr>
-        <td><%= w.rank.name %></td>
-        <td><%= w.order_in_rank %></td>
-        <td><%= I18n.t("enums.waza.shinsa_set.#{w.shinsa_set}") %></td><!-- ja.yml を入れれば _i18n も可 -->
-        <td><%= w.koumoku %></td>
-        <td>
-          <% if w.video&.url.present? %>
-            <a href="<%= w.video.url %>" target="_blank" rel="noopener">リンク</a>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to "編集", edit_admin_waza_path(w) %> |
-          <%= link_to "削除", admin_waza_path(w), data: { turbo_method: :delete, turbo_confirm: "削除しますか？" } %>
-        </td>
-      </tr>
-    <% end %>
+    <%= render partial: "wazas/row",
+               collection: @wazas,
+               as: :waza,
+               locals: { public: false, show_actions: true } %>
   </tbody>
 </table>

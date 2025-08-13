@@ -2,6 +2,7 @@
  *= require_self
  *= require admin_wazas
  *= require custom
+ *= require home
 */
 
 nav.navbar {
@@ -29,8 +30,99 @@ footer {
 }
 
 .form-container {
-  max-width: 800px;   /* フォームの横幅制限 */
-  margin: 0 auto;     /* 中央寄せ */
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
 }
 
+.dropdown-menu:not(.show) { display: none; }
+
+.app-title-large {
+  font-size: 1.5em;
+}
+
+.preserve-newlines {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.table-wazas-public td:nth-child(3),
+.table-wazas-public td:nth-child(3) *,
+.table-wazas-public td:nth-child(3)::first-line,
+.table-wazas-public td:nth-child(3) *::first-line {
+  text-align: left !important;
+  text-indent: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.table-wazas-public td:nth-child(3)::before,
+.table-wazas-public td:nth-child(3) *::before {
+  content: none !important;
+}
+
+.preserve-newlines { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.desc-reset {
+  all: unset;
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+/* Admin dashboard */
+.admin-hero{
+  background:
+    radial-gradient(140% 120% at 0% 0%, #fff 0, #f8fafc 45%, #eef2f7 100%);
+  border: 1px solid rgba(0,0,0,.06);
+}
+.hero-image{ aspect-ratio: 4 / 5; }
+.object-fit-cover{ object-fit: cover; }
+
+.rounded-4{ border-radius: 1rem; }
+
+.select-center {
+  text-align: center;
+  text-align-last: center;
+}
+
+.select-center option { text-align: center; }
+
+@supports (-moz-appearance:none) {
+  .select-center { text-align-last: center; }
+}
+
+.desc-reset { all: unset; display:block; white-space:pre-wrap; overflow-wrap:anywhere; text-align:left; }
+
+.rounded-4 { border-radius: 1rem; }
+.object-fit-cover { object-fit: cover; }
+.bg-primary-subtle { background-color: rgba(13,110,253,.1); }
+.bg-success-subtle { background-color: rgba(25,135,84,.12); }
+.bg-warning-subtle { background-color: rgba(255,193,7,.18); }
+.bg-secondary-subtle { background-color: rgba(108,117,125,.15); }
+
+.hero-rank-badge {
+  font-size: 1.15rem;
+  padding: .35rem .75rem;
+  border-radius: .75rem;
+}
+
+.mypage-narrow {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.desc-reset { all: unset; display:block; white-space:pre-wrap; overflow-wrap:anywhere; text-align:left; }
+
+.hero-ki{
+  position:absolute;
+  top:.5rem;
+  right:15rem;
+  width:clamp(90px, 18vw, 160px);
+  opacity:.15;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.2));
+  pointer-events:none; user-select:none;
+  transform:rotate(-6deg);
+}
