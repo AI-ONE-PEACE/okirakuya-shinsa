@@ -1,4 +1,3 @@
-# db/migrate/20250810142229_create_videos.rb
 class CreateVideos < ActiveRecord::Migration[7.1]
   def change
     create_table :videos do |t|

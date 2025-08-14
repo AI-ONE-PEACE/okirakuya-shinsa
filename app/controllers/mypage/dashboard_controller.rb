@@ -1,27 +1,46 @@
-# app/controllers/mypage/dashboard_controller.rb
-class Mypage::DashboardController < Mypage::BaseController
+class Mypage::DashboardController < ApplicationController
+  before_action :authenticate_user!
+  before_action :load_member
+
   def index
-    @member = current_user.member
+    @current_rank  = @member&.rank
+    @last_exam_on  = @member&.last_exam_on
+    @next_exam_on  = @member&.next_exam_on
 
-    return unless @member
+    @current_wazas =
+      if @current_rank
+        Waza.includes(:videos).where(rank_id: @current_rank.id).order(:order_in_rank).to_a
+      else
+        []
+      end
 
-    rank_scope = if Rank.column_names.include?("position")
-                   Rank.order(:position)
-                 else
-                   Rank.order(:id)
-                 end
+     @next_rank =
+      if @current_rank
+        if Rank.column_names.include?('position') && @current_rank.position.present?
+          Rank.where('position > ?', @current_rank.position).order(:position).first ||
+            Rank.where('id > ?', @current_rank.id).order(:id).first
+        else
+          Rank.where('id > ?', @current_rank.id).order(:id).first
+        end
+      end
 
-    @current_rank = @member.rank
-    @next_rank = if @current_rank
-                   rank_scope.where("id > ?", @current_rank.id).first
-                 else
-                   nil
-                 end
+      @next_wazas =
+      if @next_rank
+        Waza.includes(:videos).where(rank_id: @next_rank.id).order(:order_in_rank).to_a
+      else
+        []
+      end
+  end
 
-    @last_exam_on = @member.last_exam_on
-    @next_exam_on = @member.next_exam_on
+  private
 
-    @current_wazas = @current_rank ? Waza.includes(:videos).where(rank: @current_rank).order(:order_in_rank) : []
-    @next_wazas    = @next_rank    ? Waza.includes(:videos).where(rank: @next_rank).order(:order_in_rank)    : []
+  def load_member
+    if current_user.admin? && params[:member_id].present?
+      @member = Member.find_by(id: params[:member_id])
+      redirect_to root_path, alert: '会員が見つかりません' and return unless @member
+    else
+      @member = current_user.member
+      redirect_to root_path, alert: '会員情報がありません' and return unless @member
+    end
   end
 end

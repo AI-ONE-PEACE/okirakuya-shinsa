@@ -55,7 +55,7 @@
     <h2 class="h5 mb-0">現在の段位：<%= @current_rank&.name || "未設定" %></h2>
   </div>
 
-  <% if @current_wazas.any? %>
+  <% if @current_wazas.present? %>
     <div class="row g-3 justify-content-center">
       <% @current_wazas.each do |w| %>
         <div class="col-12 col-lg-8 col-xl-7">
@@ -102,7 +102,7 @@
 
   <% if @next_rank.blank? %>
     <p class="text-body-secondary">現在が最上位のため、次の段位はありません。</p>
-  <% elsif @next_wazas.any? %>
+  <% elsif @next_wazas.present? %>
     <div class="row g-3 justify-content-center">
       <% @next_wazas.each do |w| %>
         <div class="col-12 col-lg-8 col-xl-7">
